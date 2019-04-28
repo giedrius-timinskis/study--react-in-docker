@@ -10,5 +10,5 @@ before_install:
 
 script:
   # Tell Travis how to run the tests
-  # It expects some output from the command so we run tests with a coverage flag to force output 
-  - docker run giedrius-timinskis/study--react-in-docker npm run test -- --coverage
+  # It expects some output from the command so we have to run a specific npm command that will force process exit
+  - docker run giedrius-timinskis/study--react-in-docker npm run test:ci
