@@ -1,0 +1,14 @@
+# Docker will need sudo permissions
+sudo: required
+# Travis will need to have docker installed
+services:
+  - docker
+
+before_install:
+  # Build the docker image with a tag
+  - docker build -t giedrius-timinskis/study--react-in-docker -f Dockerfile.dev .
+
+script:
+  # Tell Travis how to run the tests
+  # It expects some output from the command so we run tests with a coverage flag to force output 
+  - docker run giedrius-timinskis/study--react-in-docker npm run test -- --coverage
