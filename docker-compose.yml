@@ -1,0 +1,31 @@
+version: '3'
+services:
+  # Runs the React web app image
+  reactwebapp:
+    build:
+      # Since we have a custom Dockerfile we need to specify the context and which file to use
+      context: .
+      dockerfile: Dockerfile.dev 
+    ports:
+      - "3000:3000"
+    # Map repository file system to container so we can see changes inside Docker when we change local
+    volumes:
+      # Do not map node_modules, we'll install it via npm install
+      - /app/node_modules
+      # Map currentFolder to /app folder inside container
+      - .:/app
+  # Runs the tests for the React web app
+  # Just copied the webapp config and deleted ports because tests dont need connectivity
+  reactwebapptests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev 
+    # Map repository file system to container so we can see changes inside Docker when we change local
+    volumes:
+      # Do not map node_modules, we'll install it via npm install
+      - /app/node_modules
+      # Map currentFolder to /app folder inside container
+      - .:/app
+    # Override the default COMMAND in Dockerfile.dev to run tests
+    command: ["npm", "run", "test"]
+    
