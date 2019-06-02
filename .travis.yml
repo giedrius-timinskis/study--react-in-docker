@@ -1,5 +1,6 @@
 # Docker will need sudo permissions
 sudo: required
+
 # Travis will need to have docker installed
 services:
   - docker

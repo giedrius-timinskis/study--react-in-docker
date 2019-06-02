@@ -9,6 +9,10 @@ RUN npm run build
 
 # 2. Run the built files in Nginx
 FROM nginx
+
+# Expose port 80 in AWS Elastic Beanstalk
+EXPOSE 80
+
 # Take shit from the previous phase FROM TO
 # /usr/share/nginx/html taken from Nginx docs - its the default dir for serving static content
 COPY --from=builder /app/build /usr/share/nginx/html
