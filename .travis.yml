@@ -12,3 +12,22 @@ script:
   # Tell Travis how to run the tests
   # It expects some output from the command so we have to run a specific npm command that will force process exit
   - docker run giedrius-timinskis/study--react-in-docker npm run test:ci
+
+deploy:
+  # Tell Travis how to deploy the application to AWS Beanstalk
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "testing-docker"
+  env: "TestingDocker-env"
+  # Travis zips build files -> Deploys to S3 -> This is the name of S3 bucket
+  # Note: The bucket is automatically generated when the beanstalk deployment is created
+  bucket_name: "elasticbeanstalk-us-east-1-089083709043"
+  bucket_path: "testing-docker"
+  # Only run the deploy job on merge to master
+  on:
+    branch: master
+  # The AWS access keys are coming from the env variables stored in Travis
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    # Weird bug where this needs to be wrapped in double quotes, double check later"
+    secure: "$AWS_SECRET_KEY"
